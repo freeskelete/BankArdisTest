@@ -1,0 +1,44 @@
+Error loading data: JSON parse error
+Client Oleg is served by department reception
+Client Oleg left department reception
+Client Oleg is served by department credit
+Client Oleg left department credit
+Client Oleg left the bank
+Client John is served by department credit
+Client John left department credit
+Client John is served by department support
+Client John left department support
+Client John left the bank
+Client Anna is served by department support
+Client Anna left department support
+Client Anna is served by department reception
+Client Oleg is served by department reception
+Client Oleg left department reception
+Client Oleg is served by department credit
+Client Oleg left department credit
+Client Oleg left the bank
+Client John is served by department credit
+Client John left department credit
+Client John is served by department support
+Client John left department support
+Client John left the bank
+Client Anna is served by department support
+Client Anna left department support
+Client Anna is served by department reception
+2024-08-05 16:33:25 Bank opened
+2024-08-05 16:33:25 Client Oleg came to the department reception
+2024-08-05 16:33:25 Client Oleg is served by the department reception
+2024-08-05 16:33:27 Client Oleg left the department reception
+2024-08-05 16:33:27 Client Oleg is served by the department credit
+2024-08-05 16:33:29 Client Oleg left the department credit
+2024-08-05 16:33:29 Client Oleg left the bank
+2024-08-05 16:33:29 Client John came to the department credit
+2024-08-05 16:33:29 Client John is served by the department credit
+2024-08-05 16:33:30 Client John left the department credit
+2024-08-05 16:33:30 Client John is served by the department support
+2024-08-05 16:33:31 Client John left the department support
+2024-08-05 16:33:31 Client John left the bank
+2024-08-05 16:33:31 Client Anna came to the department support
+2024-08-05 16:33:31 Client Anna is served by the department support
+2024-08-05 16:33:33 Client Anna left the department support
+2024-08-05 16:33:33 Client Anna is served by the department reception

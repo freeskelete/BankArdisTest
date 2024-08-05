@@ -1,0 +1,13 @@
+{
+    "departments": [
+        { "name": "reception", "employees": 2 },
+        { "name": "credit", "employees": 4 },
+        { "name": "support", "employees": 1 }
+    ],
+    "clients": [
+        { "name": "Oleg", "time": 2222, "priority": 1, "departments": ["reception", "credit"] },
+        { "name": "John", "time": 920, "priority": 2, "departments": ["credit", "support"] },
+        { "name": "Anna", "time": 1435, "priority": 1, "departments": ["support", "reception"] },
+        { "name": "Gregory", "time": 1235, "priority": 1, "departments": ["support", "reception"] }
+    ]
+}

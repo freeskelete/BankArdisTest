@@ -1,0 +1,3 @@
+D:/hueta/BankArdisTest/build/CMakeFiles/BankArdisTest.dir
+D:/hueta/BankArdisTest/build/CMakeFiles/ALL_BUILD.dir
+D:/hueta/BankArdisTest/build/CMakeFiles/ZERO_CHECK.dir

@@ -1,0 +1,10 @@
+^D:\HUETA\BANKARDISTEST\BUILD\CMAKEFILES\3C47F04AD00DCAE91650AF0DE19792E0\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/hueta/BankArdisTest -BD:/hueta/BankArdisTest/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/hueta/BankArdisTest/build/BankArdisTest.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
