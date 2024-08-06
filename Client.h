@@ -5,6 +5,12 @@
 #include <vector>
 
 class Client {
+private:
+    std::string name;
+    unsigned int serviceTime;
+    unsigned int priority;
+    std::vector<std::string> departments;
+    size_t currentDepartmentIndex;    
 public:
     Client(const std::string& name, unsigned int serviceTime, unsigned int priority, const std::vector<std::string>& departments);
 
@@ -14,13 +20,6 @@ public:
     const std::vector<std::string>& getDepartments() const;
     void moveToNextDepartment();
     bool isDone() const;
-
-private:
-    std::string name;
-    unsigned int serviceTime;
-    unsigned int priority;
-    std::vector<std::string> departments;
-    size_t currentDepartmentIndex;
 };
 
 #endif // CLIENT_H

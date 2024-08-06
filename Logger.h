@@ -6,6 +6,10 @@
 #include <sstream>
 
 class Logger {
+private:
+    void log(const std::string& message);
+    std::mutex mtx;
+    std::string getCurrentTime() const;    
 public:
     void logBankOpened();
     void logBankClosed();
@@ -13,12 +17,6 @@ public:
     void logClientServed(const std::string& clientName, const std::string& departmentName);
     void logClientLeft(const std::string& clientName, const std::string& departmentName);
     void logClientDone(const std::string& clientName);
-
-private:
-    void log(const std::string& message);
-    std::mutex mtx;
-
-    std::string getCurrentTime() const;
 };
 
 #endif // LOGGER_H

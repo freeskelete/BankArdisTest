@@ -2,6 +2,7 @@
 #include <iostream>
 
 int main() {
+    int xxx;
     try {
         Bank bank("input.json");
         bank.open();
@@ -9,6 +10,8 @@ int main() {
         std::cerr << "Error: " << e.what() << std::endl;
         return 1;
     }
+    std::cout << "[Press any button to exit programm]" << std::endl;
+    std::cin.get();
 
     return 0;
 }

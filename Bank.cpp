@@ -40,12 +40,20 @@ void Bank::open() {
         cv.wait(lock, [this] { return !isBankOpen || allClientsServed(); });
     }
 
+    // Обновляем состояние банка и уведомляем потоки
+    {
+        std::unique_lock<std::mutex> lock(mtx);
+        isBankOpen = false;
+        cv.notify_all();
+    }
+
     if (processingThread.joinable()) {
         processingThread.join();
     }
 
     close();
 }
+
 
 void Bank::processClients() {
     std::sort(clients.begin(), clients.end(), [](const std::shared_ptr<Client>& a, const std::shared_ptr<Client>& b) {
@@ -76,15 +84,16 @@ void Bank::processClients() {
 void Bank::handleClientInDepartment(const std::shared_ptr<Client>& client, const std::shared_ptr<Department>& department) {
     department->addClient(client);
 
-    std::thread([this, client, department]() {
+    while (!client->isDone()) {
         department->workerAvailable();
-        if (!client->isDone()) {
-            const auto& nextDepartmentName = client->getDepartments()[client->getDepartments().size() - 1];
-            if (departments.find(nextDepartmentName) != departments.end()) {
-                handleClientInDepartment(client, departments[nextDepartmentName]);
-            }
+
+        // Обработка следующего отдела
+        const auto& nextDepartmentName = client->getDepartments()[client->getDepartments().size() - 1];
+        if (departments.find(nextDepartmentName) != departments.end()) {
+            auto nextDepartment = departments[nextDepartmentName];
+            handleClientInDepartment(client, nextDepartment);
         }
-    }).detach();
+    }
 }
 
 bool Bank::allClientsServed() const {

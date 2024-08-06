@@ -11,11 +11,6 @@
 #include "Logger.h"
 
 class Bank {
-public:
-    explicit Bank(const std::string& jsonFile);
-    void open();
-    void close();
-
 private:
     void processClients();
     void handleClientInDepartment(const std::shared_ptr<Client>& client, const std::shared_ptr<Department>& department);
@@ -26,7 +21,11 @@ private:
     std::shared_ptr<Logger> logger;
     bool isBankOpen;
     std::mutex mtx;
-    std::condition_variable cv;
+    std::condition_variable cv;   
+public:
+    explicit Bank(const std::string& jsonFile);
+    void open();
+    void close();
 };
 
 #endif // BANK_H
