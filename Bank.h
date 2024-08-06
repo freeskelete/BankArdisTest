@@ -9,7 +9,6 @@
 #include "Department.h"
 #include "Client.h"
 #include "Logger.h"
-#include <atomic>
 
 class Bank {
 public:

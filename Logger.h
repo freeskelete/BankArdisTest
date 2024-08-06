@@ -1,26 +1,24 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-#include <string>
-#include <queue>
 #include <mutex>
-#include <condition_variable>
-#include <thread>
+#include <iostream>
+#include <sstream>
 
 class Logger {
 public:
-    Logger();
-    ~Logger();
-    void start();
-    void log(const std::string& message);
+    void logBankOpened();
+    void logBankClosed();
+    void logClientArrived(const std::string& clientName, const std::string& departmentName);
+    void logClientServed(const std::string& clientName, const std::string& departmentName);
+    void logClientLeft(const std::string& clientName, const std::string& departmentName);
+    void logClientDone(const std::string& clientName);
 
 private:
-    void processQueue();
-    std::queue<std::string> logQueue;
-    std::mutex queueMutex;
-    std::condition_variable queueCV;
-    std::thread logThread;
-    bool running;
+    void log(const std::string& message);
+    std::mutex mtx;
+
+    std::string getCurrentTime() const;
 };
 
 #endif // LOGGER_H

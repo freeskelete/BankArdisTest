@@ -3,13 +3,13 @@
 
 #include <string>
 #include <vector>
-#include <memory>
 
 class Client {
 public:
     Client(const std::string& name, unsigned int serviceTime, unsigned int priority, const std::vector<std::string>& departments);
 
-    const std::string& getName() const;
+    std::string getName() const;
+    unsigned int getServiceTime() const;
     unsigned int getPriority() const;
     const std::vector<std::string>& getDepartments() const;
     void moveToNextDepartment();
