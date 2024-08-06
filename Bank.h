@@ -29,9 +29,6 @@ private:
     bool isBankOpen;
     std::mutex mtx;
     std::condition_variable cv;
-
-    size_t totalClients;
-    size_t doneClients;
 };
 
 #endif // BANK_H

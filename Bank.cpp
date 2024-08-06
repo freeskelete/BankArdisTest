@@ -38,7 +38,6 @@ Bank::Bank(const std::string& jsonFile) : isBankOpen(false) {
 void Bank::open() {
     logger->start();
     isBankOpen = true;
-    totalClients = clients.size();
 
     auto now = std::chrono::system_clock::now();
     auto time = std::chrono::system_clock::to_time_t(now);
@@ -90,8 +89,10 @@ void Bank::handleClientInDepartment(const std::shared_ptr<Client>& client, const
                 handleClientInDepartment(client, departments[nextDepartmentName]);
             }
         }
-        else {
-            ++doneClients;
+
+        std::unique_lock<std::mutex> lock(mtx);
+        if (allClientsServed()) {
+            cv.notify_all();
         }
     }).detach();
 }
@@ -108,15 +109,14 @@ void Bank::updateDepartments() {
 }
 
 bool Bank::allClientsServed() const {
-    return (doneClients == totalClients);
+    return std::all_of(clients.begin(), clients.end(), [](const std::shared_ptr<Client>& client) {
+        return client->isDone();
+    });
 }
 
-
-
 void Bank::close() {
-
-            auto now = std::chrono::system_clock::now();
-            auto time = std::chrono::system_clock::to_time_t(now);
-            auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
-            std::cout << "[" << std::put_time(std::localtime(&time), "%Y-%m-%d %H:%M:%S.") << std::setw(3) << std::setfill('0') << ms.count() << "] Bank closed" << std::endl;
+    auto now = std::chrono::system_clock::now();
+    auto time = std::chrono::system_clock::to_time_t(now);
+    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
+    std::cout << "[" << std::put_time(std::localtime(&time), "%Y-%m-%d %H:%M:%S.") << std::setw(3) << std::setfill('0') << ms.count() << "] Bank closed" << std::endl;
 }
