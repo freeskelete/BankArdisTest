@@ -37,14 +37,14 @@ void Bank::open() {
 
     {
         std::unique_lock<std::mutex> lock(mtx);
-        cv.wait(lock, [this] { return allClientsServed(); });
+        cv.wait(lock, [this] { return !isBankOpen || allClientsServed(); });
     }
-
-    close();
 
     if (processingThread.joinable()) {
         processingThread.join();
     }
+
+    close();
 }
 
 void Bank::processClients() {
@@ -52,16 +52,25 @@ void Bank::processClients() {
         return a->getPriority() < b->getPriority();
     });
 
+    std::vector<std::thread> clientThreads;
+
     for (auto& client : clients) {
         if (!client->isDone()) {
             const auto& departmentName = client->getDepartments()[0];
             if (departments.find(departmentName) != departments.end()) {
-                handleClientInDepartment(client, departments[departmentName]);
+                clientThreads.emplace_back(&Bank::handleClientInDepartment, this, client, departments[departmentName]);
             }
         }
     }
 
-    updateDepartments();
+    for (auto& thread : clientThreads) {
+        if (thread.joinable()) {
+            thread.join();
+        }
+    }
+
+    std::unique_lock<std::mutex> lock(mtx);
+    cv.notify_all();
 }
 
 void Bank::handleClientInDepartment(const std::shared_ptr<Client>& client, const std::shared_ptr<Department>& department) {
@@ -75,23 +84,7 @@ void Bank::handleClientInDepartment(const std::shared_ptr<Client>& client, const
                 handleClientInDepartment(client, departments[nextDepartmentName]);
             }
         }
-
-        std::unique_lock<std::mutex> lock(mtx);
-        if (allClientsServed()) {
-            cv.notify_all();
-        }
     }).detach();
-}
-
-void Bank::updateDepartments() {
-    while (isBankOpen && !allClientsServed()) {
-        std::unique_lock<std::mutex> lock(mtx);
-        cv.wait(lock, [this] { return !isBankOpen || allClientsServed(); });
-
-        for (auto& [name, department] : departments) {
-            department->workerAvailable();
-        }
-    }
 }
 
 bool Bank::allClientsServed() const {
@@ -101,5 +94,10 @@ bool Bank::allClientsServed() const {
 }
 
 void Bank::close() {
+    {
+        std::unique_lock<std::mutex> lock(mtx);
+        isBankOpen = false;
+        cv.notify_all();
+    }
     logger->logBankClosed();
 }

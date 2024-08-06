@@ -18,7 +18,6 @@ public:
 
 private:
     void processClients();
-    void updateDepartments();
     void handleClientInDepartment(const std::shared_ptr<Client>& client, const std::shared_ptr<Department>& department);
     bool allClientsServed() const;
 
