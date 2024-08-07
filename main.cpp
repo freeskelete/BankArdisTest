@@ -10,7 +10,7 @@ int main() {
         std::cerr << "Error: " << e.what() << std::endl;
         return 1;
     }
-    std::cout << "[Press any button to exit programm]" << std::endl;
+    std::cout << "[Input any button or press Enter to exit programm]" << std::endl;
     std::cin.get();
 
     return 0;
