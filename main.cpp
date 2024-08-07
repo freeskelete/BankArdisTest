@@ -2,7 +2,6 @@
 #include <iostream>
 
 int main() {
-    int xxx;
     try {
         Bank bank("input.json");
         bank.open();
