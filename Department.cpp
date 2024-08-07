@@ -20,25 +20,17 @@ void Department::workerAvailable() {
         cv.wait(lock);
     }
 
-    if (clientQueue.empty()) {
-        return;
-    }
-
     auto client = clientQueue.front();
     clientQueue.pop();
 
-    lock.unlock(); 
-
+    lock.unlock();
     logger->logClientServed(client->getName(), name);
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(client->getPriority() * 100)); 
+    std::this_thread::sleep_for(std::chrono::milliseconds(client->getServiceTime()));
 
+    client->completeCurrentTask();
     logger->logClientLeft(client->getName(), name);
 
-    client->moveToNextDepartment();
-    if (client->isDone()) {
-        logger->logClientDone(client->getName());
-    }
 }
 
 bool Department::isEmpty() const {

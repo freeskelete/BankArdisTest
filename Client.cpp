@@ -19,12 +19,17 @@ const std::vector<std::string>& Client::getDepartments() const {
     return departments;
 }
 
-void Client::moveToNextDepartment() {
-    if (currentDepartmentIndex < departments.size() - 1) {
-        ++currentDepartmentIndex;
-    }
+size_t Client::getCurrentDepartmentIndex() const {
+    return currentDepartmentIndex;
 }
 
+
 bool Client::isDone() const {
-    return currentDepartmentIndex >= departments.size() - 1;
+    return currentDepartmentIndex >= departments.size();
+}
+
+void Client::completeCurrentTask() {
+    if (currentDepartmentIndex < departments.size()) {
+        ++currentDepartmentIndex;
+    }
 }

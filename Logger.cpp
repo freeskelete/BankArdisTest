@@ -15,11 +15,11 @@ void Logger::logClientArrived(const std::string& clientName, const std::string& 
 }
 
 void Logger::logClientServed(const std::string& clientName, const std::string& departmentName) {
-    log(getCurrentTime() + " " + clientName + " is served by the department " + departmentName);
+    log(getCurrentTime() + " Client " + clientName + " is served by the department " + departmentName);
 }
 
 void Logger::logClientLeft(const std::string& clientName, const std::string& departmentName) {
-    log(getCurrentTime() + " " + clientName + " left the department " + departmentName);
+    log(getCurrentTime() + " Client " + clientName + " left the department " + departmentName);
 }
 
 void Logger::logClientDone(const std::string& clientName) {

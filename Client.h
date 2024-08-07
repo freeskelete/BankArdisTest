@@ -18,8 +18,9 @@ public:
     unsigned int getServiceTime() const;
     unsigned int getPriority() const;
     const std::vector<std::string>& getDepartments() const;
-    void moveToNextDepartment();
+    size_t getCurrentDepartmentIndex() const;
     bool isDone() const;
+    void completeCurrentTask();
 };
 
 #endif // CLIENT_H
